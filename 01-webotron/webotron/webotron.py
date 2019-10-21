@@ -1,7 +1,21 @@
-import boto3
-import click
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Webotron: Deploy websites with aws.
+
+Webotron automates the process of deploying static web sites
+- Configure AWS S3 buckets
+    - Create them
+    - Set them up for static website hosting
+    - Deploy local files to them
+- Configure DNS with AWS Route 53
+- Configure Content Delivery Network and SSL with AWS CloudFront
+"""
 from pathlib import Path
 import mimetypes
+import boto3
+import click
+
 
 session = boto3.Session(profile_name='pyautomation')
 s3 = session.resource('s3')
@@ -9,7 +23,7 @@ s3 = session.resource('s3')
 
 @click.group()
 def cli():
-    """Webotron deploys websites to AWS"""
+    """Webotron deploys websites to AWS."""
     pass
 
 
@@ -31,7 +45,7 @@ def list_bucket_objects(bucket):
 @cli.command('setup-bucket')
 @click.argument('bucket')
 def setup_bucket(bucket):
-    """Create and configure S3 bucket"""
+    """Create and configure S3 bucket."""
     if session.region_name == 'us-east-1':
         s3_bucket = s3.create_bucket(Bucket=bucket)
     else:
@@ -69,6 +83,7 @@ def setup_bucket(bucket):
 
 
 def upload_file(s3_bucket, path, key):
+    """Upload path to s3_bucket at key."""
     content_type = mimetypes.guess_type(key)[0] or 'text/plain'
     s3_bucket.upload_file(
         path,
@@ -82,7 +97,7 @@ def upload_file(s3_bucket, path, key):
 @click.argument('pathname', type=click.Path(exists=True))
 @click.argument('bucket')
 def sync(pathname, bucket):
-    """Sync content of PATHNAME to BUCKET"""
+    """Sync content of PATHNAME to BUCKET."""
     s3_bucket = s3.Bucket(bucket)
     root = Path(pathname).expanduser().resolve()
 
