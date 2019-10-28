@@ -14,12 +14,12 @@ Webotron automates the process of deploying static web sites
 from pprint import pprint
 import boto3
 import click
-import util
+import webotron.util
 
-from bucket import BucketManager
-from domain import DomainManager
-from certificate import CertificateManager
-from cdn import DistributionManager
+from webotron.bucket import BucketManager
+from webotron.domain import DomainManager
+from webotron.certificate import CertificateManager
+from webotron.cdn import DistributionManager
 
 
 session = None

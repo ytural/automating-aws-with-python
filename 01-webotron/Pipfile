@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 iphython = "*"
 ipython = "*"
+setuptools = "*"
 
 [packages]
 boto3 = "*"

@@ -4,7 +4,7 @@
 import boto3
 from pathlib import Path
 import mimetypes
-import util
+import webotron.util
 from hashlib import md5
 from functools import reduce
 
