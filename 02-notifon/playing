@@ -56,7 +56,7 @@ my_security_group = list(security_group_iterator)[0]
 my_security_group_rules = my_security_group.ip_permissions
 [{'FromPort': 22,
   'IpProtocol': 'tcp',
-  'IpRanges': [{'CidrIp': '72.21.198.0/24'}],
+  'IpRanges': [{'CidrIp': 'put_cidr_range_here'}],
   'Ipv6Ranges': [],
   'PrefixListIds': [],
   'ToPort': 22,
@@ -68,7 +68,7 @@ defsg.authorize_ingress(
 				IpPermissions=
 							[{'FromPort': 22,
 							  'IpProtocol': 'tcp',
-							  'IpRanges': [{'CidrIp': '72.21.198.0/24'}],
+							  'IpRanges': [{'CidrIp': 'put_cidr_range_here'}],
 							  'Ipv6Ranges': [],
 							  'PrefixListIds': [],
 							  'ToPort': 22,
