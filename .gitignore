@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+/02-notifon/config.dev.json
+/03-videolyzer/config.dev.json
+/03-videolyzer/PexelsVideos2364298.mp4
