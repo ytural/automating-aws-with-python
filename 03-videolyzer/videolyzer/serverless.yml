@@ -1,0 +1,42 @@
+service: videolyzer
+
+
+provider:
+  name: aws
+  runtime: python3.7
+  profile: ${file(../config.${self:provider.stage}.json):videolyazer.profile}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - "rekognition:*"
+      Resource: "*"
+    - Effect: 'Allow'
+      Action:
+        - "s3:GetObject"
+      Resource:
+        - Fn::Join:
+            - ''
+            - - ${self:custom.videosBucketArn}
+              - '/*'
+
+
+custom:
+  videosBucketArn:
+    Fn::Join:
+      - ':'
+      - - arn
+        - aws
+        - s3
+        - ''
+        - ''
+        - ${file(../config.${self:provider.stage}.json):videolyazer.videos_bucket}
+
+functions:
+  startProcessingVideo:
+    handler: handler.start_processing_video
+    events:
+      - s3:
+          bucket: "${file(../config.${self:provider.stage}.json):videolyazer.videos_bucket}"
+          event: s3:ObjectCreated:*
+          rules:
+            - suffix: .mp4
